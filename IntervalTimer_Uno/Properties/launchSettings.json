@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "IntervalTimer_Uno": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}

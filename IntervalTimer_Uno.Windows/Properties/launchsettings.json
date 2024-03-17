@@ -1,0 +1,10 @@
+{
+	"profiles": {
+		"IntervalTimer_Uno.Windows (Unpackaged)": {
+			"commandName": "Project"
+		},
+		"IntervalTimer_Uno.Windows (Package)": {
+			"commandName": "MsixPackage"
+		}
+	}
+}

@@ -1,0 +1,10 @@
+{
+  "background_color": "#ffffff",
+  "description": "IntervalTimer_Uno",
+  "display": "standalone",
+  "name": "IntervalTimer_Uno",
+  "short_name": "IntervalTimer_Uno",
+  "start_url": "/index.html",
+  "theme_color": "#ffffff",
+  "scope": "/"
+}
