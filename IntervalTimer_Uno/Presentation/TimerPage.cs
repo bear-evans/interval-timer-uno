@@ -28,6 +28,7 @@ public sealed partial class TimerPage : Page
                                     .Width(500)
                                     .Height(50)
                                     .HorizontalAlignment(HorizontalAlignment.Stretch)
+                                    .Foreground(() => vm.BarColor)
                             ),
                         new Button().Name("PrimaryTimerButton")
                             .Background(Theme.Brushes.Primary.Default)

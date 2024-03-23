@@ -44,6 +44,7 @@ public partial class TimerViewModel : ObservableObject
     [ObservableProperty] public int intervalMinute;
     [ObservableProperty] public int intervalSecond;
     // ----------------------------------------------
+    [ObservableProperty] public Color barColor = Color.FromArgb(255, 0, 0, 255);
 
     #endregion Properties
 
@@ -54,12 +55,13 @@ public partial class TimerViewModel : ObservableObject
     public TimerViewModel(
         IStringLocalizer localizer,
         IOptions<AppConfig> appInfo,
-        INavigator navigation)
+        INavigator navigation,
+        IWritableOptions<TimeInputConfig> timeConfig)
     {
         navigator = navigation;
 
         // create a new timer object to serve as the backing
-        timer = new();
+        timer = new Business.Models.Timer(timeConfig);
 
         PrimaryClick = new AsyncRelayCommand(PrimaryButtonClicked);
         SettingsClick = new AsyncRelayCommand(SettingsClicked);
@@ -69,6 +71,7 @@ public partial class TimerViewModel : ObservableObject
         // event listeners to timer
         timer.CountdownDisplayChanged += OnCountdownDisplayChanged;
         timer.TimebarProgressChanged += OnTimebarProgressChanged;
+        timer.TimebarColorChanged += OnTimebarColorChanged;
     }
 
     #endregion Constructor
@@ -86,7 +89,7 @@ public partial class TimerViewModel : ObservableObject
     /// <summary> Switches to the settings page when clicked. </summary>
     public async Task SettingsClicked()
     {
-        // switch to settings
+        await navigator.NavigateViewModelAsync<SettingsViewModel>(this, qualifier: Qualifiers.Dialog);
     }
 
     #endregion User Commands
@@ -113,6 +116,7 @@ public partial class TimerViewModel : ObservableObject
     /// <param name="value"> The new color to display. </param>
     public void OnTimebarColorChanged(Color value)
     {
+        BarColor = value;
     }
 
     #endregion Display Updates

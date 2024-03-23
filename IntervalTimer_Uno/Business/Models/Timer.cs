@@ -32,8 +32,9 @@ public class Timer
 
     #region Settings
 
-    // ------------------------------ private ApplicationDataContainer localSettings =
-    // Windows.Storage.ApplicationData.Current.LocalSettings; ------------------------------
+    // ------------------------------
+    private IWritableOptions<TimeInputConfig> timeConfig;
+    // ------------------------------
 
     #endregion Settings
 
@@ -343,12 +344,50 @@ public class Timer
         TimebarColor = timerbarPaused;
 
         // Register input event listeners
+    }
+
+    public Timer(IWritableOptions<TimeInputConfig> config)
+    {
+        timeConfig = config;
+        UpdateFromSettings(config);
+        RegisterListeners();
+    }
+
+    #endregion Constructor
+
+    // ==============================
+
+    #region Saving and Loading
+
+    /// <summary> Gets the time settings from the app configuration. </summary>
+    /// <param name="config"> The Time Input Configuration option as an IOption object. </param>
+    public void UpdateFromSettings(IOptions<TimeInputConfig> config)
+    {
+        TimeInputConfig timeSettings = config.Value;
+
+        StartTime = timeSettings.StartTime;
+        EndTime = timeSettings.EndTime;
+        Interval = timeSettings.Interval;
+
+        startHourInput = StartTime.Hours;
+        startMinuteInput = StartTime.Minutes;
+        endHourInput = EndTime.Hours;
+        endMinuteInput = EndTime.Minutes;
+
+        IntervalHourInput = Interval.Hours;
+        IntervalMinuteInput = Interval.Minutes;
+        IntervalSecondInput = Interval.Seconds;
+    }
+
+    /// <summary> Registers event listeners. </summary>
+    public void RegisterListeners()
+    {
         StartInputChanged += OnStartTimeInputChanged;
         EndInputChanged += OnEndTimeInputChanged;
         IntervalInputChanged += OnIntervalInputChanged;
     }
 
-    #endregion Constructor
+    #endregion Saving and Loading
 
     // ==============================
 

@@ -48,6 +48,7 @@ public class App : Application
                     configBuilder
                         .EmbeddedSource<App>()
                         .Section<AppConfig>()
+                        .Section<TimeInputConfig>()
                 )
                 // Enable localization (see appsettings.json for supported languages)
                 .UseLocalization()
@@ -84,6 +85,7 @@ public class App : Application
         views.Register(
             new ViewMap(ViewModel: typeof(ShellViewModel)),
             new ViewMap<MainPage, MainViewModel>(),
+            new ViewMap<SettingsPage, SettingsViewModel>(),
             new DataViewMap<SecondPage, SecondViewModel, Entity>(),
             new ViewMap<TimerPage, TimerViewModel>()
         );
@@ -94,6 +96,7 @@ public class App : Application
                 {
                     new RouteMap("Main", View: views.FindByViewModel<MainViewModel>()),
                     new RouteMap("Second", View: views.FindByViewModel<SecondViewModel>()),
+                    new RouteMap("Settings", View: views.FindByViewModel<SettingsViewModel>()),
                     new RouteMap("Timer", View: views.FindByViewModel<TimerViewModel>())
                 }
             )
